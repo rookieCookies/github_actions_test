@@ -1,0 +1,31 @@
+name: Rust Build
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to match your main branch name
+  pull_request:
+    branches:
+      - main  # Adjust this to match your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Create Downloads Folder
+        run: mkdir -p downloads
+
+      - name: Move Executable
+        run: mv target/release/* downloads/
